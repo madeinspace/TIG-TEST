@@ -29,7 +29,7 @@ const ShipmentRows = ({ shipments, callBack }: ShipmentRowsProps) => {
                 <Text fontSize="xs" color="layout.body">Created: {formatDate(lastUpdate)}</Text>
             </Td>
             <Td>
-            <Tag size="md" variant="outline" padding={2} colorScheme={colorScheme}>
+            <Tag size="md" variant="outline" padding={2} colorScheme={colorScheme} minW={100} justifyContent="center">
                 <TagLabel>{status}</TagLabel>
             </Tag>
             </Td>
