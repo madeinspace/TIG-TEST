@@ -50,27 +50,27 @@ const ShipmentDetails: FC<TShipmentInfo> = ({ shipment }) => {
     <Container p="0">
         <Heading as='h5' size='sm' marginBottom={10} color='layout.body'>SHIPMENT</Heading>
         <SimpleGrid columns={2} spacing={5}>
-            <Box color='layout.body'>Status</Box>
+            <Text color='layout.body'>Status</Text>
             <Box>
                 <Tag size="md" variant="outline" padding={2} colorScheme={colorScheme}>
                     <TagLabel>{status}</TagLabel>
                 </Tag>
             </Box>
             {deliveredTime && <>
-                <Box color='layout.body'>Delivered time</Box>
-                <Box>{formatDate(deliveredTime)}</Box>
+                <Box as='h1' color='layout.body'>Delivered time</Box>
+                <Text>{formatDate(deliveredTime)}</Text>
             </>}
-            <Box color='layout.body'>Delivery address</Box>
+            <Text color='layout.body'>Delivery address</Text>
             <Text>{deliveryAddress}</Text>
-            <Box color='layout.body'>last Updated</Box>
-            <Box>{formatDate(lastUpdate)}</Box>
-            <Box color='layout.body'>Total transit time</Box>
-            <Box>{totalTransit}</Box>
+            <Text color='layout.body'>last Updated</Text>
+            <Text>{formatDate(lastUpdate)}</Text>
+            <Text color='layout.body'>Total transit time</Text>
+            <Text>{totalTransit}</Text>
         </SimpleGrid>
 
         <Divider marginTop={10} marginBottom={10}/>
         <Heading as='h5' size='sm' marginBottom={10} color='layout.body'>TRACKING HISTORY</Heading>
-        <Box padding="20px 20px 0 20px" border="1px solid #DDDEE4" borderRadius="5px" maxHeight="278px" overflowY="auto">
+        <Box padding="20px 20px 0 20px" border="1px solid #DDDEE4" borderRadius="5px" maxHeight="300px" overflowY="auto">
             {
                 data.trackingEvents.length > 0 ? 
                 <Stepper index={0} orientation="vertical" maxHeight="300px" gap="0">
@@ -83,10 +83,10 @@ const ShipmentDetails: FC<TShipmentInfo> = ({ shipment }) => {
                             <StepIndicator border="none">
                             {
                                 status === "Picked Up" ? 
-                                <FaCheckCircle style={{ color: 'green' }}/> : 
+                                <FaCheckCircle size='20px' style={{ color: '#73BE73' }}/> : 
                                 status === 'Unknown Scan' ? 
-                                <FaExclamationCircle style={{ color: 'red' }}/> :
-                                <FaCheckCircle style={{ color: 'green' }}/>
+                                <FaExclamationCircle size='20px' style={{ color: 'red' }}/> :
+                                <FaCheckCircle size='20px' style={{ color: '#73BE73' }}/>
                             }
                             </StepIndicator>
                             <SimpleGrid columns={2} rowGap="10px" >
