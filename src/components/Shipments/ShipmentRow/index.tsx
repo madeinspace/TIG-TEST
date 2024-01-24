@@ -23,7 +23,7 @@ const ShipmentRows = ({ shipments, callBack }: ShipmentRowsProps) => {
         const colorScheme = getColorScheme(status, deliveryStatus)
 
         return (
-        <Tr key={id} onClick={() => callBack(shipment)} p={1}>
+        <Tr key={id} onClick={() => callBack(shipment)} p={1} cursor={"pointer"}>
             <Td>
                 <Text fontSize="sm">{trackingId}</Text>
                 <Text fontSize="xs" color="layout.body">Created: {formatDate(lastUpdate)}</Text>
