@@ -70,7 +70,7 @@ const ShipmentDetails: FC<TShipmentInfo> = ({ shipment }) => {
 
         <Divider marginTop={10} marginBottom={10}/>
         <Heading as='h5' size='sm' marginBottom={10} color='layout.body'>TRACKING HISTORY</Heading>
-        <Box padding="20px" border="1px solid #DDDEE4" borderRadius="5px" maxHeight="278px" overflowY="auto">
+        <Box padding="20px 20px 0 20px" border="1px solid #DDDEE4" borderRadius="5px" maxHeight="278px" overflowY="auto">
             {
                 data.trackingEvents.length > 0 ? 
                 <Stepper index={0} orientation="vertical" maxHeight="300px" gap="0">
