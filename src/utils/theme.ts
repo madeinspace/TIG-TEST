@@ -5,6 +5,10 @@ export const theme = extendTheme({
     layout: {
       body: '#82848f',  
     },
+    trackingIcons:{
+      pickedup: '#73BE73',
+      unknown: 'red'
+    },
     deliveryStatus: {
       delivered: 'green',
       intransit: 'orange',
