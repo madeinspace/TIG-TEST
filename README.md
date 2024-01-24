@@ -35,6 +35,7 @@ This project is a sample web application built with Vite, React, TypeScript, Cha
    npm run dev
 
 Open http://localhost:5173 to view the local build.
+NB: Vite requires Node 18+ version. 
 
 ## Project Structure
 
