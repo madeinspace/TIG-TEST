@@ -74,32 +74,35 @@ const ShipmentDetails: FC<TShipmentInfo> = ({ shipment }) => {
             {
                 data.trackingEvents.length > 0 ? 
                 <Stepper index={0} orientation="vertical" maxHeight="300px" gap="0">
-                    {data.trackingEvents.map((event: TShipmentDetail) => (
-                    <Step key={event.id} style={{ width: '100%'}}>
-                        <StepIndicator border="none">
-                        {
-                            event.status === "Picked Up" ? 
-                            <FaCheckCircle style={{ color: 'green' }}/> : 
-                            event.status === 'Unknown Scan' ? 
-                            <FaExclamationCircle style={{ color: 'red' }}/> :
-                            <FaCheckCircle style={{ color: 'green' }}/>
-                        }
-                    
-                        </StepIndicator>
-                        <SimpleGrid columns={2} rowGap="10px" >
-                            <Box height='80px'>
-                                <StepTitle>{event.status}</StepTitle>
-                                <StepDescription>{event.location}</StepDescription>
-                            </Box>
-                            <Box position={"absolute"} right='10'>
-                                <Text>{formatDate(event.timestamp)}</Text>
-                                <Text>{formatHour(event.timestamp)}</Text>
-                            </Box>
-                        </SimpleGrid>
-                        
-                        <StepSeparator />
-                    </Step>
-                    ))}
+                    {data.trackingEvents.map((event: TShipmentDetail) => {
+
+                        const { id, status, location, timestamp } = event
+
+                        return (
+                        <Step key={id} style={{ width: '100%'}}>
+                            <StepIndicator border="none">
+                            {
+                                status === "Picked Up" ? 
+                                <FaCheckCircle style={{ color: 'green' }}/> : 
+                                status === 'Unknown Scan' ? 
+                                <FaExclamationCircle style={{ color: 'red' }}/> :
+                                <FaCheckCircle style={{ color: 'green' }}/>
+                            }
+                            </StepIndicator>
+                            <SimpleGrid columns={2} rowGap="10px" >
+                                <Box height='80px'>
+                                    <StepTitle>{status}</StepTitle>
+                                    <StepDescription>{location}</StepDescription>
+                                </Box>
+                                <Box position={"absolute"} right='10'>
+                                    <Text>{formatDate(timestamp)}</Text>
+                                    <Text>{formatHour(timestamp)}</Text>
+                                </Box>
+                            </SimpleGrid>
+
+                            <StepSeparator />
+                        </Step>
+                        )})}
                 </Stepper> 
                 : <Text>No tracking history available</Text>
             }

@@ -1,13 +1,8 @@
-export const formatDate = (date?: string) => {
-    if (!date) { return ''}
-    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
-    const formattedDate = new Date(date).toLocaleDateString(undefined, options);
-    return formattedDate
-}
+export const formatDate = (date?: string): string => {
+    return date ? new Date(date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+  };
 
-export const formatHour = (date?: string) => {
-    if (!date) { return ''}
-    const options: Intl.DateTimeFormatOptions = { hour: 'numeric', minute: '2-digit', hour12: true};
-    const formattedHour = new Date(date).toLocaleString(undefined, options);
-    return formattedHour
-}
+export const formatHour = (date?: string): string => {
+    return date ? new Date(date).toLocaleString(undefined, { hour: 'numeric', minute: '2-digit', hour12: true }) : '';
+};
+  
