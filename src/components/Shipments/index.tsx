@@ -21,8 +21,8 @@ const ShipmentList = ({ onShipmentClick }: TShipmentList) => {
 
   const { loading, error, data } = useQuery(SHIPMENTS_QUERY);
   const [shipments, setShipments] = useState<TShipment[]>([])
-  const [shipmentSorting, setShipmentSorting] = useState(true)
-  const [statusSorting, setStatusSorting] = useState(true)
+  const [shipmentSorting, setShipmentSorting] = useState<boolean>(true)
+  const [statusSorting, setStatusSorting] = useState<boolean>(true)
 
   useEffect(() => {
     if (!loading && !error) {
@@ -42,14 +42,6 @@ const ShipmentList = ({ onShipmentClick }: TShipmentList) => {
     setShipments(sortedShipments)
   }, [statusSorting])
 
-  const handleOrderShipments = () =>{
-    setShipmentSorting(!shipmentSorting)
-  }
-
-  const handleOrderStatus = () =>{
-    setStatusSorting(!statusSorting)
-  }
-
   if (error) return <ErrorMessage message={errorMessages.shipments} />;
   if (loading) return <LoadingSpinner />;
 
@@ -59,8 +51,8 @@ const ShipmentList = ({ onShipmentClick }: TShipmentList) => {
         <Table size="md">
           <Thead>
             <Tr>
-              <Th onClick={handleOrderShipments}>Shipments</Th>
-              <Th onClick={handleOrderStatus}>Status</Th>
+              <Th onClick={() => setShipmentSorting(!shipmentSorting)}>Shipments</Th>
+              <Th onClick={() => setStatusSorting(!statusSorting)}>Status</Th>
             </Tr>
           </Thead>
           <Tbody>
