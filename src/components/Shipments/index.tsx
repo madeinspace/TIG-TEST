@@ -10,26 +10,48 @@ import {
 } from '@chakra-ui/react';
 import ShipmentRows from './ShipmentRow';
 import { SHIPMENTS_QUERY } from '../../data/queries';
-import { TShipmentList } from '../../data/types';
+import { TShipment, TShipmentList } from '../../data/types';
 import LoadingSpinner from '../LoadingSpinner';
 import ErrorMessage from '../ErrorMessage';
 import errorMessages from '../ErrorMessage/errorMessages';
-
+import { useEffect, useState } from 'react';
+import { sortShipmentsByDate, sortShipmentsByStatus } from '../../utils/sorting';
 
 const ShipmentList = ({ onShipmentClick }: TShipmentList) => {
 
   const { loading, error, data } = useQuery(SHIPMENTS_QUERY);
+  const [shipments, setShipments] = useState<TShipment[]>([])
+  const [shipmentSorting, setShipmentSorting] = useState(true)
+  const [statusSorting, setStatusSorting] = useState(true)
+
+  useEffect(() => {
+    if (!loading && !error) {
+      setShipments(sortShipmentsByDate(data.shipments, shipmentSorting))
+    } else if (error) {
+      console.error('Error:', error);
+    }
+  }, [loading, error, data]);
+
+  useEffect(()=>{
+    const sortedShipments = sortShipmentsByDate(shipments, shipmentSorting)
+    setShipments(sortedShipments)
+  }, [shipmentSorting])
+
+  useEffect(()=>{
+    const sortedShipments = !statusSorting ? sortShipmentsByStatus(shipments): sortShipmentsByDate(shipments, shipmentSorting)
+    setShipments(sortedShipments)
+  }, [statusSorting])
+
+  const handleOrderShipments = () =>{
+    setShipmentSorting(!shipmentSorting)
+  }
+
+  const handleOrderStatus = () =>{
+    setStatusSorting(!statusSorting)
+  }
 
   if (error) return <ErrorMessage message={errorMessages.shipments} />;
   if (loading) return <LoadingSpinner />;
-
-  const shipments = data?.shipments || [];
-
-  const sortedShipments = [...shipments].sort((a, b) => {
-    const dateA = a.lastUpdate ? new Date(a.lastUpdate).getTime() : 0
-    const dateB = b.lastUpdate ? new Date(b.lastUpdate).getTime() : 0
-    return dateB - dateA;
-  });
 
   return (
     <Container bg='#dddee4' padding="4" minW="100%" minH="100vh">
@@ -37,12 +59,12 @@ const ShipmentList = ({ onShipmentClick }: TShipmentList) => {
         <Table size="md">
           <Thead>
             <Tr>
-              <Th>Shipments</Th>
-              <Th>Status</Th>
+              <Th onClick={handleOrderShipments}>Shipments</Th>
+              <Th onClick={handleOrderStatus}>Status</Th>
             </Tr>
           </Thead>
           <Tbody>
-            <ShipmentRows shipments={sortedShipments} callBack={onShipmentClick} />
+            <ShipmentRows shipments={shipments} callBack={onShipmentClick} />
           </Tbody>
         </Table>
       </TableContainer>

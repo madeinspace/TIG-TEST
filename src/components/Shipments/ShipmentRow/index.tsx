@@ -12,12 +12,18 @@ const ShipmentRows = ({ shipments, callBack }: ShipmentRowsProps) => {
 
     const { colors: { deliveryStatus } } = useTheme()
 
-    return shipments.map((shipment: TShipment) => {
+    const sortedShipments = [...shipments].sort((a, b) => {
+        const dateA = a.lastUpdate ? new Date(a.lastUpdate).getTime() : 0
+        const dateB = b.lastUpdate ? new Date(b.lastUpdate).getTime() : 0
+        return dateB - dateA;
+    });
+
+    return sortedShipments.map((shipment: TShipment) => {
         const { id, trackingId, status, lastUpdate } = shipment
         const colorScheme = getColorScheme(status, deliveryStatus)
 
         return (
-        <Tr key={id} onClick={() => callBack(shipment)} p={1} cursor={"pointer"}>
+        <Tr key={id} onClick={() => callBack(shipment)} p={1} cursor={pointer}>
             <Td>
                 <Text fontSize="sm">{trackingId}</Text>
                 <Text fontSize="xs" color="layout.body">Created: {formatDate(lastUpdate)}</Text>
