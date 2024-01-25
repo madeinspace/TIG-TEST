@@ -7,6 +7,7 @@ import {
   Th,
   TableContainer,
   Container,
+  Text,
 } from '@chakra-ui/react';
 import ShipmentRows from './ShipmentRow';
 import { SHIPMENTS_QUERY } from '../../data/queries';
@@ -16,6 +17,7 @@ import ErrorMessage from '../ErrorMessage';
 import errorMessages from '../ErrorMessage/errorMessages';
 import { useEffect, useState } from 'react';
 import { sortShipmentsByDate, sortShipmentsByStatus } from '../../utils/sorting';
+import { FaSort } from 'react-icons/fa';
 
 const ShipmentList = ({ onShipmentClick }: TShipmentList) => {
 
@@ -51,8 +53,8 @@ const ShipmentList = ({ onShipmentClick }: TShipmentList) => {
         <Table size="md">
           <Thead>
             <Tr>
-              <Th onClick={() => setShipmentSorting(!shipmentSorting)}>Shipments</Th>
-              <Th onClick={() => setStatusSorting(!statusSorting)}>Status</Th>
+              <Th onClick={() => setShipmentSorting(!shipmentSorting)}><Text display={'flex'} alignItems={'center'} cursor={'pointer'}>Shipments <FaSort /></Text></Th>
+              <Th onClick={() => setStatusSorting(!statusSorting)}><Text display={'flex'} alignItems={'center'} cursor={'pointer'}>Status <FaSort /></Text></Th>
             </Tr>
           </Thead>
           <Tbody>
