@@ -17,12 +17,19 @@ import errorMessages from '../ErrorMessage/errorMessages';
 
 
 const ShipmentList = ({ onShipmentClick }: TShipmentList) => {
+
   const { loading, error, data } = useQuery(SHIPMENTS_QUERY);
 
   if (error) return <ErrorMessage message={errorMessages.shipments} />;
   if (loading) return <LoadingSpinner />;
 
   const shipments = data?.shipments || [];
+
+  const sortedShipments = [...shipments].sort((a, b) => {
+    const dateA = a.lastUpdate ? new Date(a.lastUpdate).getTime() : 0
+    const dateB = b.lastUpdate ? new Date(b.lastUpdate).getTime() : 0
+    return dateB - dateA;
+  });
 
   return (
     <Container bg='#dddee4' padding="4" minW="100%" minH="100vh">
@@ -35,7 +42,7 @@ const ShipmentList = ({ onShipmentClick }: TShipmentList) => {
             </Tr>
           </Thead>
           <Tbody>
-            <ShipmentRows shipments={shipments} callBack={onShipmentClick} />
+            <ShipmentRows shipments={sortedShipments} callBack={onShipmentClick} />
           </Tbody>
         </Table>
       </TableContainer>
