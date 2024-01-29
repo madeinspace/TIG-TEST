@@ -28,18 +28,21 @@ const ShipmentList = ({ onShipmentClick }: TShipmentList) => {
 
   useEffect(() => {
     if (!loading && !error) {
-      let sortedShipments = sortShipmentsByDate(
-        data.shipments,
-        shipmentSorting
-      );
-      if (statusSorting) {
-        sortedShipments = sortShipmentsByStatus(sortedShipments);
-      }
-      setShipments(sortedShipments);
+      setShipments(sortShipmentsByDate(data.shipments, shipmentSorting))
     } else if (error) {
-      console.error("Error:", error);
+      console.error('Error:', error);
     }
-  }, [loading, error, data, shipmentSorting, statusSorting]);
+  }, [loading, error, data]);
+
+  useEffect(()=>{
+    const sortedShipments = sortShipmentsByDate(shipments, shipmentSorting)
+    setShipments(sortedShipments)
+  }, [shipmentSorting])
+
+  useEffect(()=>{
+    const sortedShipments = !statusSorting ? sortShipmentsByStatus(shipments): sortShipmentsByDate(shipments, shipmentSorting)
+    setShipments(sortedShipments)
+  }, [statusSorting])
 
   if (error) return <ErrorMessage message={errorMessages.shipments} />;
   if (loading) return <LoadingSpinner />;
